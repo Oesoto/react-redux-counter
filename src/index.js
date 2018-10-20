@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 //Redux
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 //Importar cada uno de los reducers
 import counterReducer from './store/reducers/counter';
@@ -17,8 +17,21 @@ const rootReducer = combineReducers({
     res: resultReducer
 });
 
+//Función que se le envía al middleware
+//Hace log de la acción enviada y del estado actualizado
+const logger = store => {
+    return next => {
+        return action => {
+            console.log('[Middleware] Dispatching', action);
+            const result = next(action);
+            console.log('[Middleware] next state', store.getState());
+            return result;
+        };
+    };
+};
+
 //Se crea un store con el reducer importado
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 //El componente Provider permite inyectar el store en la aplicación como prop
 ReactDOM.render(
     <Provider store={store}>
