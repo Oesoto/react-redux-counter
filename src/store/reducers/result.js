@@ -1,8 +1,8 @@
+//Importar el objeto con tipos de acciones para usar en el switch
+import { actionTypes } from '../actions/actionTypes';
+
 //Un reducer es una función
 //Toma como parametros un estado y una acción
-
-//Importar el objeto con tipos de acciones para usar en el switch
-import { actionTypes } from '../actions';
 
 //Se define un estado inicial para el reducer
 const initialState = {

@@ -4,8 +4,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 //Redux
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+//Redux-Thunk - Permitirá hacer llamadas asincronas con Redux
+import thunk from 'redux-thunk';
+
 //Importar cada uno de los reducers
 import counterReducer from './store/reducers/counter';
 import resultReducer from './store/reducers/result';
@@ -30,8 +33,12 @@ const logger = store => {
     };
 };
 
-//Se crea un store con el reducer importado
-const store = createStore(rootReducer, applyMiddleware(logger));
+//Permite integrar la aplicación al add-on de Redux Dev tools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+//Se crea un store con el reducer importado y los middlewares que se quieran agregar
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
+
 //El componente Provider permite inyectar el store en la aplicación como prop
 ReactDOM.render(
     <Provider store={store}>
