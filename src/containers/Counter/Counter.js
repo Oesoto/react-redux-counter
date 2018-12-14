@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //Connect es la función que me permite conectar el componente a la parte del store que le interesa al componente
 import { connect } from 'react-redux';
-import * as actionCreators from '../../store/actions/index';
+import * as actionCreators from '../../store/actions';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
